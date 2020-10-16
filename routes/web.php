@@ -34,3 +34,8 @@ Route::post('/editarRecoleccion/guardaEdicion','HomeController@guardaEdicionReco
 // Enlaza Recolector con Recolleccion
 Route::get('/muestraRecoleccion/{id}','HomeController@muestraEnlaces01');
 Route::get('/enlazarRecolectorRecoleccion/{id_recolector}/{id_recoleccion}','HomeController@enlace01');
+
+Route::get('/home', 'HomeController@index')->name('home');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

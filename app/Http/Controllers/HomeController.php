@@ -60,7 +60,7 @@ class HomeController extends Controller
     public function editaRecolector($id)
     {
         $dato = recolector::find($id);
-        return view('vistasAlgo.editaRecolector')->with('recolector',$dato);
+        return view('VistasReciclaje.editaRecolector')->with('dato',$dato);
     }
 
     public function guardaEdicionRecolector(Request $request)
@@ -107,7 +107,7 @@ class HomeController extends Controller
     public function editaRecoleccion($id)
     {
         $dato = reciclaje::find($id);
-        return view('vistasAlgo.editaRecoleccion')->with('reciclaje',$dato);
+        return view('VistasReciclaje.editaRecoleccion')->with('reciclaje',$dato);
     }
 
     public function guardaEdicionRecoleccion(Request $request)
@@ -126,9 +126,8 @@ class HomeController extends Controller
 
     public function muestraEnlaces01($id)
     {
-        $recolector = recolector::find($id);}
-        $reciclaje = DB::select('SELECT id FROM reciclaje');
-        return view('vistasAlgo.relacionaRecolectorRecoleccion')->with('reciclaje',$dato);
+        $recolector = recolector::find($id);
+        return view('VistasReciclaje.relacionaRecolectorRecoleccion')->with('reciclaje',$dato);
     }
 
     public function enlace01($id_recolector, $id_recoleccion)
