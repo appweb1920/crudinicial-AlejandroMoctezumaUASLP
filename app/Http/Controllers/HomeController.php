@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Models\datos;
-use App\Models\materias;
-use App\Models\inscripcion;
+use App\Models\recolector;
+use App\Models\reciclaje;
+use App\Models\detalle_recolector;
 
 class HomeController extends Controller
 {
@@ -30,78 +30,113 @@ class HomeController extends Controller
         return view('home');
     }
 
-    public function Saluda()
+    public function muestraRecolector()
     {
-        $d = datos::all();
-        return view('vistasAlgo.saluda')->with('datos',$d);
+        $d = recolector::all();
+        return view('VistasReciclaje.muestraRecolector')->with('datos',$d);
     }
 
-    public function Despide(Request $request)
+    public function creaRecolector()
     {
-        $dato = new datos;
+        return view('VistasReciclaje.creaRecolector');
+    }
+
+    public function guardaRecolector(Request $request)
+    {
+        $dato = new recolector;
         $dato->nombre = $request->nombre;
-        $dato->apellidos = $request->apellido;
+        $dato->dias = $request->dias;
         $dato->save();
-        return redirect('/hola');
-
-        //return view('vistasAlgo.saluda')
-        //->with('n',$nombre)
-        //->with('a',$apellido);
+        return redirect('/muestraRecolector');
     }
 
-    public function MuestraEdicion($id)
+    public function eliminaRecolector($id)
     {
-        // buscar dato
-        $dato = datos::find($id);
-        // pasar el dato a la vista
-        return view('vistasAlgo.editaDato')->with('dato',$dato);
+        $dato = recolector::find($id);
+        $dato->delete();
+        return redirect('/muestraRecolector');
     }
 
-    public function guardaEdicion(Request $request)
+    public function editaRecolector($id)
     {
-        $dato = datos::find($request->id);
+        $dato = recolector::find($id);
+        return view('vistasAlgo.editaRecolector')->with('recolector',$dato);
+    }
+
+    public function guardaEdicionRecolector(Request $request)
+    {
+        $dato = recolector::find($request->id);
         if(!is_null($dato))
         {
             $dato->nombre = $request->nombre;
-            $dato->apellidos = $request->apellido;
+            $dato->dias = $request->dias;
             $dato->save();
         }
-        return redirect('/hola');
+        return redirect('/muestraRecolector');
     }
 
-    public function Borra($id)
+    public function muestraRecoleccion()
     {
-        $dato = datos::find($id);
+        $d = reciclaje::all();
+        return view('VistasReciclaje.muestraRecoleccion')->with('datos',$d);
+    }
+
+    public function creaRecoleccion()
+    {
+        return view('VistasReciclaje.creaRecoleccion');
+    }
+
+    public function guardaRecoleccion(Request $request)
+    {
+        $dato = new reciclaje;
+        $dato->tipo_basura = $request->tipo_basura;
+        $dato->direccion = $request->direccion;
+        $dato->apertura = $request->apertura;
+        $dato->cierre = $request->cierre;
+        $dato->save();
+        return redirect('/muestraRecoleccion');
+    }
+
+    public function eliminaRecoleccion($id)
+    {
+        $dato = reciclaje::find($id);
         $dato->delete();
-        return redirect('/hola');
+        return redirect('/muestraRecoleccion');
     }
 
-    public function MuestraMaterias($id)
+    public function editaRecoleccion($id)
     {
-        // buscar datos
-        $materia = materias::all();
-        $inscripcion = inscripcion::all();
-        // pasar el dato a la vista
-        return view('vistasAlgo.muestraMaterias')
-        ->with('materia',$materia)
-        ->with('inscripcion',$inscripcion)
-        ->with('id',$id);
+        $dato = reciclaje::find($id);
+        return view('vistasAlgo.editaRecoleccion')->with('reciclaje',$dato);
     }
 
-    public function guardaMateria(Request $request)
+    public function guardaEdicionRecoleccion(Request $request)
     {
-        $materia = new materias;
-        $materia->nombre_materia = $request->nombre;
-        $materia->save();
-        return redirect('/hola');
+        $dato = reciclaje::find($request->id);
+        if(!is_null($dato))
+        {
+            $dato->tipo_basura = $request->tipo_basura;
+            $dato->direccion = $request->direccion;
+            $dato->apertura = $request->apertura;
+            $dato->cierre = $request->cierre;
+            $dato->save();
+        }
+        return redirect('/muestraRecoleccion');
     }
 
-    public function inscribirMateria($id_alumno, $id_materia)
+    public function muestraEnlaces01($id)
     {
-        $inscripcion = new inscripcion;
-        $inscripcion->id_alumno = $id_alumno;
-        $inscripcion->id_materia = $id_materia;
-        $inscripcion->save();
-        return redirect('/hola');
+        $recolector = recolector::find($id);}
+        $reciclaje = DB::select('SELECT id FROM reciclaje');
+        return view('vistasAlgo.relacionaRecolectorRecoleccion')->with('reciclaje',$dato);
+    }
+
+    public function enlace01($id_recolector, $id_recoleccion)
+    {
+        $relacion = new detalle_recolector;
+        $relacion->id_recolector = $id_recolector;
+        $relacion->id_puntoreciclaje = $id_recoleccion;
+        $relacion->save();
+        return redirect('/muestraRecoleccion/{{$id_recolector}}');
     }
 }
