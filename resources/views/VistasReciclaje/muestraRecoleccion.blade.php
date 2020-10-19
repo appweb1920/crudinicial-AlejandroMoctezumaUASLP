@@ -10,15 +10,21 @@
     <h1>Muestra Puntos</h1>
 
     <div>
-        <p><a href="">Recolectores</a></p>
-        <p><a href="">Puntos de Reciclaje</a></p>
-        <p><a href="">Detalles Recolector</a></p>
+        <p><a href="/muestraRecolector">Recolectores</a></p>
+        <p><a href="/muestraRecoleccion">Puntos de Reciclaje</a></p>
+        <p><a href="/muestraEnlaces">Detalles Recolector</a></p>
     </div>
 
     <p><a href="/creaRecoleccion">Nuevo Punto de Recoleccion</a></p>
     @if(!is_null($datos))
         @foreach ($datos as $d)     
-            <p>{{$d->tipo_basura}} {{$d->direccion}} {{$d->apertura}} {{$d->cierre}}</p>
+            <p>{{$d->tipo_basura}} | {{$d->direccion}} | [{{$d->apertura}} - {{$d->cierre}}]</p>
+            @foreach ($relaciones as $r)    
+                @if ($r->id == $d->id) 
+                    {{$r->nombre}} |
+                @endif
+            @endforeach
+            <br>
             <a href="/editaRecoleccion/{{$d->id}}">Edita</a>
             <a href="/eliminaRecoleccion/{{$d->id}}">Borrar</a>
         @endforeach

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use DB;
 use App\Models\recolector;
 use App\Models\reciclaje;
 use App\Models\detalle_recolector;
@@ -33,7 +34,19 @@ class HomeController extends Controller
     public function muestraRecolector()
     {
         $d = recolector::all();
-        return view('VistasReciclaje.muestraRecolector')->with('datos',$d);
+        $r = DB::table('recolector')
+        ->join('detalle_recolector', 'detalle_recolector.id_recolector', '=', 'recolector.id')
+        ->join('reciclaje', 'reciclaje.id', '=', 'detalle_recolector.id_puntoreciclaje')
+        ->select(
+            'recolector.id',
+            'reciclaje.direccion'
+        )
+        ->orderBy('recolector.id','asc')
+        ->orderBy('reciclaje.apertura','asc')
+        ->get();
+        return view('VistasReciclaje.muestraRecolector')
+        ->with('datos',$d)
+        ->with('relaciones',$r);
     }
 
     public function creaRecolector()
@@ -78,7 +91,19 @@ class HomeController extends Controller
     public function muestraRecoleccion()
     {
         $d = reciclaje::all();
-        return view('VistasReciclaje.muestraRecoleccion')->with('datos',$d);
+        $r = DB::table('reciclaje')
+        ->join('detalle_recolector', 'detalle_recolector.id_puntoreciclaje', '=', 'reciclaje.id')
+        ->join('recolector', 'recolector.id', '=', 'detalle_recolector.id_recolector')
+        ->select(
+            'reciclaje.id',
+            'recolector.nombre'
+        )
+        ->orderBy('reciclaje.id','asc')
+        ->orderBy('recolector.nombre','asc')
+        ->get();
+        return view('VistasReciclaje.muestraRecoleccion')
+        ->with('datos',$d)
+        ->with('relaciones',$r);
     }
 
     public function creaRecoleccion()
@@ -124,18 +149,28 @@ class HomeController extends Controller
         return redirect('/muestraRecoleccion');
     }
 
-    public function muestraEnlaces01($id)
+    public function muestraEnlaces01()
     {
-        $recolector = recolector::find($id);
-        return view('VistasReciclaje.relacionaRecolectorRecoleccion')->with('reciclaje',$dato);
+        $r = recolector::all();
+        $p = reciclaje::all();
+        return view('VistasReciclaje.relacionaRecolectorRecoleccion')
+        ->with('recolector',$r)
+        ->with('punto',$p);
     }
 
     public function enlace01($id_recolector, $id_recoleccion)
     {
-        $relacion = new detalle_recolector;
-        $relacion->id_recolector = $id_recolector;
-        $relacion->id_puntoreciclaje = $id_recoleccion;
-        $relacion->save();
-        return redirect('/muestraRecoleccion/{{$id_recolector}}');
+        $result = DB::table('detalle_recolector')
+        ->where('id_recolector','=',$id_recolector)
+        ->where('id_puntoreciclaje','=',$id_recoleccion)
+        ->get();
+        if(count($result) == 0)
+        {
+            $relacion = new detalle_recolector;
+            $relacion->id_recolector = $id_recolector;
+            $relacion->id_puntoreciclaje = $id_recoleccion;
+            $relacion->save();
+        }
+        return redirect('/muestraRecoleccion');
     }
 }

@@ -32,7 +32,7 @@ Route::get('/editaRecoleccion/{id}','HomeController@editaRecoleccion');
 Route::post('/editarRecoleccion/guardaEdicion','HomeController@guardaEdicionRecoleccion');
 
 // Enlaza Recolector con Recolleccion
-Route::get('/muestraRecoleccion/{id}','HomeController@muestraEnlaces01');
+Route::get('/muestraEnlaces','HomeController@muestraEnlaces01');
 Route::get('/enlazarRecolectorRecoleccion/{id_recolector}/{id_recoleccion}','HomeController@enlace01');
 
 Route::get('/home', 'HomeController@index')->name('home');

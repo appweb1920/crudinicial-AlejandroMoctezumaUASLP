@@ -10,9 +10,9 @@
     <h1>Creando Recolector</h1>
 
     <div>
-        <p><a href="">Recolectores</a></p>
-        <p><a href="">Puntos de Reciclaje</a></p>
-        <p><a href="">Detalles Recolector</a></p>
+        <p><a href="/muestraRecolector">Recolectores</a></p>
+        <p><a href="/muestraRecoleccion">Puntos de Reciclaje</a></p>
+        <p><a href="/muestraEnlaces">Detalles Recolector</a></p>
     </div>
 
     <form action="creaRecolector/guardaRecolector" method="POST">
