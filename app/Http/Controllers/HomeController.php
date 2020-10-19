@@ -107,7 +107,7 @@ class HomeController extends Controller
     public function editaRecoleccion($id)
     {
         $dato = reciclaje::find($id);
-        return view('VistasReciclaje.editaRecoleccion')->with('reciclaje',$dato);
+        return view('VistasReciclaje.editaRecoleccion')->with('dato',$dato);
     }
 
     public function guardaEdicionRecoleccion(Request $request)

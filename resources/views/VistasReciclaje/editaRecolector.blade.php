@@ -18,8 +18,8 @@
     <form action="/editarRecolector/guardaEdicion" method="POST">
         @csrf
         <input type="hidden" name="id" value="{{$dato->id}}">
-        <input type="text" name="nombre" value="{{$dato->nombre}}">
-        <input type="text" name="dias" value="{{$dato->dias}}">
+        <label for="nombre">Nombre del Recolector:</label><input type="text" name="nombre" value="{{$dato->nombre}}">
+        <label for="dias">Dias del Recolector:</label><input type="text" name="dias" value="{{$dato->dias}}">
         <input type="submit">
     </form>
 </body>
