@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {return "home";});
+Route::get('/', 'HomeController@muestraRecolector');
 
 // Recolector
 Route::get('/muestraRecolector','HomeController@muestraRecolector');
