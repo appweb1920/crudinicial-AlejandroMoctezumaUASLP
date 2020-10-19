@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Relacionar</title>  
-</head>
-<body>
-    <h2>Relaciona Recolector con Punto de Recoleccion</h2>
+@extends('layouts.app')
+
+@section('content')
+    <h3>Relaciona Recolector con Punto de Recoleccion</h3>
 
     @if(!is_null($recolector))
         @foreach ($recolector as $r)   
@@ -22,6 +17,5 @@
                 </div>  
             </div> 
         @endforeach
-    @endif
-</body>
-</html>
+    @endif 
+@endsection

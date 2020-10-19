@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edita Punto de Recoleccion</title>   
-</head>
-<body>
+@extends('layouts.app')
+
+@section('content')
     <h2>Editar Punto de Recoleccion</h2>
 
     <div class = "row">  
@@ -15,29 +10,29 @@
 
             <div class = "row">  
                 <div class = "input-field col s6">  
-                   <input type="text" name="tipo_basura" value="{{$dato->tipo_basura}}">
-                   <label for="tipo_basura">Tipo de Basura:</label>
+                <input type="text" name="tipo_basura" value="{{$dato->tipo_basura}}">
+                <label for="tipo_basura">Tipo de Basura:</label>
                 </div>  
             </div>  
 
             <div class = "row">  
                 <div class = "input-field col s6">  
-                   <input type="text" name="direccion" value="{{$dato->direccion}}">
-                   <label for="direccion">Direccion:</label>
+                <input type="text" name="direccion" value="{{$dato->direccion}}">
+                <label for="direccion">Direccion:</label>
                 </div>  
             </div>  
 
             <div class = "row">  
                 <div class = "input-field col s6">  
-                   <p>Hora de Apertura:</p>
-                   <input type="time" name="apertura" value="{{$dato->apertura}}">
+                <p>Hora de Apertura:</p>
+                <input type="time" name="apertura" value="{{$dato->apertura}}">
                 </div>  
             </div>  
 
             <div class = "row">  
                 <div class = "input-field col s6">  
-                   <p>Hora de Cierre:</p>
-                   <input type="time" name="cierre" value="{{$dato->cierre}}">
+                <p>Hora de Cierre:</p>
+                <input type="time" name="cierre" value="{{$dato->cierre}}">
                 </div>  
             </div>  
 
@@ -48,5 +43,4 @@
             </div>
         </form>         
     </div>  
-</body>
-</html>
+@endsection

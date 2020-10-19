@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edita Recolector</title> 
-</head>
-<body>
-    <h2>Editar Recolector</h2>
+@extends('layouts.app')
+
+@section('content')
+    <h1>Editar Recolector</h1>
 
     <div class = "row"> 
         <form action="/editarRecolector/guardaEdicion" method="POST" class = "col s12"> 
@@ -34,5 +29,4 @@
             </div>
         </form>         
     </div>  
-</body>
-</html>
+@endsection

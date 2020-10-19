@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Muestra Recolector</title>
-</head>
-<body>
+@extends('layouts.app')
+
+@section('content')
     <h2>Muestra Recolectores</h2>
 
     <button class = "btn waves-effect waves-teal amber z-depth-1">  
@@ -33,5 +28,4 @@
             </div>  
         @endforeach
     @endif
-</body>
-</html>
+@endsection
