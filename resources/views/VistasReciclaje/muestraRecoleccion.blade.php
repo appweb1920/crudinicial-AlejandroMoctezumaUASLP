@@ -27,7 +27,10 @@
 
     <h2>Muestra Punto de Recoleccion</h2>
 
-    <p><a href="/creaRecoleccion">Nuevo Punto de Recoleccion</a></p>
+    <button class = "btn waves-effect waves-teal amber z-depth-1">  
+        <a href="/creaRecoleccion">Nuevo Punto de Recoleccion</a>
+    </button></td>  
+
     @if(!is_null($datos))
         @foreach ($datos as $d)     
             <p>{{$d->tipo_basura}} | {{$d->direccion}} | [{{$d->apertura}} - {{$d->cierre}}]</p>
@@ -37,8 +40,12 @@
                 @endif
             @endforeach
             <br>
-            <a href="/editaRecoleccion/{{$d->id}}">Edita</a>
-            <a href="/eliminaRecoleccion/{{$d->id}}">Borrar</a>
+            <button class = "btn waves-effect waves-teal amber z-depth-1">  
+                <a href="/editaRecoleccion/{{$d->id}}">Edita</a>
+            </button></td>  
+            <button class = "btn waves-effect waves-teal amber z-depth-1">  
+                <a href="/eliminaRecoleccion/{{$d->id}}">Borrar</a>
+            </button></td>  
         @endforeach
     @endif
 </body>

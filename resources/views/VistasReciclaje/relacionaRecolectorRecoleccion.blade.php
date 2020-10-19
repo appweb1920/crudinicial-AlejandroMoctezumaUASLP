@@ -31,7 +31,9 @@
         @foreach ($recolector as $r)     
             <p>{{$r->nombre}}</p>
             @foreach ($punto as $p)     
-                <a href="/enlazarRecolectorRecoleccion/{{$r->id}}/{{$p->id}}">{{$p->direccion}} | </a>
+                <button class = "btn waves-effect waves-teal amber z-depth-1">  
+                    <a href="/enlazarRecolectorRecoleccion/{{$r->id}}/{{$p->id}}">{{$p->direccion}}</a>
+                </button></td>  
             @endforeach
             <br>
         @endforeach
