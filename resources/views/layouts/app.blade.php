@@ -67,11 +67,20 @@
                         </ul>
 
                         <!-- Left Side Of Navbar -->
-                        <ul id="nav-mobile" class="left">  
-                            <li><a href="/muestraRecolector">Recolectores</a></li>  
-                            <li><a href="/muestraRecoleccion">Puntos de Reciclaje</a></li>  
-                            <li><a href="/muestraEnlaces">Detalles Recolector</a></li>  
-                        </ul>  
+                        @guest
+                            <ul id="nav-mobile" class="left">  
+                                <li><a href="/muestraRecolector">Recolectores</a></li>  
+                                <li><a href="/muestraRecoleccion">Puntos de Reciclaje</a></li>  
+                            </ul>  
+                        @else
+                            <ul id="nav-mobile" class="left">  
+                                <li><a href="/muestraRecolector">Recolectores</a></li>  
+                                <li><a href="/muestraRecoleccion">Puntos de Reciclaje</a></li>  
+                                @if(Auth::user()->rol == 'Administrador')
+                                    <li><a href="/muestraEnlaces">Detalles Recolector</a></li>
+                                @endif  
+                            </ul>  
+                        @endguest
                     </div>  
                 </nav>  
             </div>  

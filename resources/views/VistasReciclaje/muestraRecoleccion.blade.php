@@ -3,9 +3,11 @@
 @section('content')
     <h2>Muestra Punto de Recoleccion</h2>
 
-    <button class = "btn waves-effect waves-teal amber z-depth-1">  
-        <a href="/creaRecoleccion">Nuevo Punto de Recoleccion</a>
-    </button></td>
+    @if(Auth::user()->rol == 'Administrador')
+        <button class = "btn waves-effect waves-teal amber z-depth-1">  
+            <a href="/creaRecoleccion">Nuevo Punto de Recoleccion</a>
+        </button></td>
+    @endif
 
     @if(!is_null($datos))
         @foreach ($datos as $d)     
@@ -18,12 +20,14 @@
                         @endif
                     @endforeach
                     <br>
-                    <button class = "btn waves-effect waves-teal amber z-depth-1">  
-                        <a href="/editaRecoleccion/{{$d->id}}">Edita</a>
-                    </button></td>  
-                    <button class = "btn waves-effect waves-teal amber z-depth-1">  
-                        <a href="/eliminaRecoleccion/{{$d->id}}">Borrar</a>
-                    </button></td>   
+                    @if(Auth::user()->rol == 'Administrador')
+                        <button class = "btn waves-effect waves-teal amber z-depth-1">  
+                            <a href="/editaRecoleccion/{{$d->id}}">Edita</a>
+                        </button></td>  
+                        <button class = "btn waves-effect waves-teal amber z-depth-1">  
+                            <a href="/eliminaRecoleccion/{{$d->id}}">Borrar</a>
+                        </button></td>   
+                    @endif
                 </div>  
             </div>  
         @endforeach

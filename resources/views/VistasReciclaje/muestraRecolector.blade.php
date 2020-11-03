@@ -3,9 +3,11 @@
 @section('content')
     <h2>Muestra Recolectores</h2>
 
-    <button class = "btn waves-effect waves-teal amber z-depth-1">  
-        <a href="/creaRecolector">Nuevo Recolector</a>
-    </button></td>
+    @if(Auth::user()->rol == 'Administrador')
+        <button class = "btn waves-effect waves-teal amber z-depth-1">  
+            <a href="/creaRecolector">Nuevo Recolector</a>
+        </button></td>
+    @endif
 
     @if(!is_null($datos))
         @foreach ($datos as $d)  
@@ -18,12 +20,14 @@
                         @endif
                     @endforeach
                     <br>
-                    <button class = "btn waves-effect waves-teal amber z-depth-1">  
-                        <a href="/editaRecolector/{{$d->id}}">Edita</a>
-                    </button></td>  
-                    <button class = "btn waves-effect waves-teal amber z-depth-1">  
-                        <a href="/eliminaRecolector/{{$d->id}}">Borrar</a>
-                    </button></td>  
+                    @if(Auth::user()->rol == 'Administrador')
+                        <button class = "btn waves-effect waves-teal amber z-depth-1">  
+                            <a href="/editaRecolector/{{$d->id}}">Edita</a>
+                        </button></td>  
+                        <button class = "btn waves-effect waves-teal amber z-depth-1">  
+                            <a href="/eliminaRecolector/{{$d->id}}">Borrar</a>
+                        </button></td>  
+                    @endif
                 </div>  
             </div>  
         @endforeach
