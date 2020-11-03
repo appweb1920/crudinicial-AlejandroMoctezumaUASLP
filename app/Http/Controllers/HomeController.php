@@ -8,6 +8,7 @@ use DB;
 use App\Models\recolector;
 use App\Models\reciclaje;
 use App\Models\detalle_recolector;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -51,41 +52,64 @@ class HomeController extends Controller
 
     public function creaRecolector()
     {
-        return view('VistasReciclaje.creaRecolector');
+        if (Auth::user()->rol == "Administrador")
+            return view('VistasReciclaje.creaRecolector');
+        else
+            return view('auth.login');
     }
 
     public function guardaRecolector(Request $request)
     {
-        $dato = new recolector;
-        $dato->nombre = $request->nombre;
-        $dato->dias = $request->dias;
-        $dato->save();
-        return redirect('/muestraRecolector');
+        if (Auth::user()->rol == "Administrador")
+        {
+            $dato = new recolector;
+            $dato->nombre = $request->nombre;
+            $dato->dias = $request->dias;
+            $dato->save();
+            return redirect('/muestraRecolector');
+        }
+        else
+            return view('auth.login');
     }
 
     public function eliminaRecolector($id)
     {
-        $dato = recolector::find($id);
-        $dato->delete();
-        return redirect('/muestraRecolector');
+        if (Auth::user()->rol == "Administrador")
+        {
+            $dato = recolector::find($id);
+            $dato->delete();
+            return redirect('/muestraRecolector');
+        }
+        else
+            return view('auth.login');
     }
 
     public function editaRecolector($id)
     {
-        $dato = recolector::find($id);
-        return view('VistasReciclaje.editaRecolector')->with('dato',$dato);
+        if (Auth::user()->rol == "Administrador")
+        {
+            $dato = recolector::find($id);
+            return view('VistasReciclaje.editaRecolector')->with('dato',$dato);
+        }
+        else
+            return view('auth.login');
     }
 
     public function guardaEdicionRecolector(Request $request)
     {
-        $dato = recolector::find($request->id);
-        if(!is_null($dato))
+        if (Auth::user()->rol == "Administrador")
         {
-            $dato->nombre = $request->nombre;
-            $dato->dias = $request->dias;
-            $dato->save();
+            $dato = recolector::find($request->id);
+            if(!is_null($dato))
+            {
+                $dato->nombre = $request->nombre;
+                $dato->dias = $request->dias;
+                $dato->save();
+            }
+            return redirect('/muestraRecolector');
         }
-        return redirect('/muestraRecolector');
+        else
+            return view('auth.login');
     }
 
     public function muestraRecoleccion()
@@ -108,69 +132,102 @@ class HomeController extends Controller
 
     public function creaRecoleccion()
     {
-        return view('VistasReciclaje.creaRecoleccion');
+        if (Auth::user()->rol == "Administrador")
+            return view('VistasReciclaje.creaRecoleccion');
+        else
+            return view('auth.login');
     }
 
     public function guardaRecoleccion(Request $request)
     {
-        $dato = new reciclaje;
-        $dato->tipo_basura = $request->tipo_basura;
-        $dato->direccion = $request->direccion;
-        $dato->apertura = $request->apertura;
-        $dato->cierre = $request->cierre;
-        $dato->save();
-        return redirect('/muestraRecoleccion');
-    }
-
-    public function eliminaRecoleccion($id)
-    {
-        $dato = reciclaje::find($id);
-        $dato->delete();
-        return redirect('/muestraRecoleccion');
-    }
-
-    public function editaRecoleccion($id)
-    {
-        $dato = reciclaje::find($id);
-        return view('VistasReciclaje.editaRecoleccion')->with('dato',$dato);
-    }
-
-    public function guardaEdicionRecoleccion(Request $request)
-    {
-        $dato = reciclaje::find($request->id);
-        if(!is_null($dato))
+        if (Auth::user()->rol == "Administrador")
         {
+            $dato = new reciclaje;
             $dato->tipo_basura = $request->tipo_basura;
             $dato->direccion = $request->direccion;
             $dato->apertura = $request->apertura;
             $dato->cierre = $request->cierre;
             $dato->save();
+            return redirect('/muestraRecoleccion');
         }
-        return redirect('/muestraRecoleccion');
+        else
+            return view('auth.login');
+    }
+
+    public function eliminaRecoleccion($id)
+    {
+        if (Auth::user()->rol == "Administrador")
+        {
+            $dato = reciclaje::find($id);
+            $dato->delete();
+            return redirect('/muestraRecoleccion');
+        }
+        else
+            return view('auth.login');
+    }
+
+    public function editaRecoleccion($id)
+    {
+        if (Auth::user()->rol == "Administrador")
+        {
+            $dato = reciclaje::find($id);
+            return view('VistasReciclaje.editaRecoleccion')->with('dato',$dato);
+        }
+        else
+            return view('auth.login');
+    }
+
+    public function guardaEdicionRecoleccion(Request $request)
+    {
+        if (Auth::user()->rol == "Administrador")
+        {
+            $dato = reciclaje::find($request->id);
+            if(!is_null($dato))
+            {
+                $dato->tipo_basura = $request->tipo_basura;
+                $dato->direccion = $request->direccion;
+                $dato->apertura = $request->apertura;
+                $dato->cierre = $request->cierre;
+                $dato->save();
+            }
+            return redirect('/muestraRecoleccion');
+        }
+        else
+            return view('auth.login');
     }
 
     public function muestraEnlaces01()
     {
-        $r = recolector::all();
-        $p = reciclaje::all();
-        return view('VistasReciclaje.relacionaRecolectorRecoleccion')
-        ->with('recolector',$r)
-        ->with('punto',$p);
+        if (Auth::user()->rol == "Administrador")
+        {
+            $r = recolector::all();
+            $p = reciclaje::all();
+            return view('VistasReciclaje.relacionaRecolectorRecoleccion')
+            ->with('recolector',$r)
+            ->with('punto',$p);
+        }
+        else
+            return view('auth.login');
     }
 
     public function enlace01($id_recolector, $id_recoleccion)
     {
-        $result = DB::table('detalle_recolector')
-        ->where('id_recolector','=',$id_recolector)
-        ->where('id_puntoreciclaje','=',$id_recoleccion)
-        ->get();
-        if(count($result) == 0)
+        if (Auth::user()->rol == "Administrador")
         {
-            $relacion = new detalle_recolector;
-            $relacion->id_recolector = $id_recolector;
-            $relacion->id_puntoreciclaje = $id_recoleccion;
-            $relacion->save();
+            $result = DB::table('detalle_recolector')
+            ->where('id_recolector','=',$id_recolector)
+            ->where('id_puntoreciclaje','=',$id_recoleccion)
+            ->get();
+            if(count($result) == 0)
+            {
+                $relacion = new detalle_recolector;
+                $relacion->id_recolector = $id_recolector;
+                $relacion->id_puntoreciclaje = $id_recoleccion;
+                $relacion->save();
+            }
+            return redirect('/muestraRecoleccion');
         }
-        return redirect('/muestraRecoleccion');
+        else
+            return view('auth.login');
     }
 }
